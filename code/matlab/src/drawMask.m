@@ -1,4 +1,4 @@
-function []=drawMask(I,shadow,color)
+function I_out=drawMask(I,shadow,color)
     if size(I<3)
         I_rgb=repmat(I,[1,1,3]);
         shadow3=repmat(shadow,[1,1,3]);

@@ -18,4 +18,4 @@ para.method='simple_kmeans';
 para.k=5;
 shadow=getShadowMask(I_sub,para);
 
-figure(),drawMask(I_sub,shadow,[1,0,0]);
+figure(),I_out=drawMask(I_sub,shadow,[1,0,0]);
