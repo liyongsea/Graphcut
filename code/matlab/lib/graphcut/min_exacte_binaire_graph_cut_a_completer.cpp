@@ -78,9 +78,17 @@ void compute_graph_cut(double * Id, double * Ir, long W, long H, double v1, doub
 
             // Termes de régularisation
             if(j<H-1)
-                g->add_edge(nodes[pix],nodes[pix+1],beta,beta);
+		{
+		double diff=abs(Id[pix]-Id[pix+1]);
+		double vpq=beta*exp(-0.5*diff);
+                g->add_edge(nodes[pix],nodes[pix+1],vpq,vpq);
+		}
             if(i<W-1)
-                g->add_edge(nodes[pix],nodes[pix+W],beta,beta);
+		{
+		double diff=abs(Id[pix]-Id[pix+W]);
+		double vpq=beta*exp(-0.5*diff);
+                g->add_edge(nodes[pix],nodes[pix+W],vpq,vpq);
+		}
         }
     }
     
