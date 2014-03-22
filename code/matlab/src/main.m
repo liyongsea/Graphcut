@@ -30,5 +30,19 @@ figure(),imshow(Ireg)
 %%
 windows_for=getSubSample(I_sub,[1 0 0])
 windows_back=getSubSample(I_sub,[0 0 1])
+%%
+forground=[];
+for i=1:size(windows_for)
+    sample=I_sub(windows_for(i,1):windows_for(i,2),windows_for(i,3):windows_for(i,4));
+    forground=[forground;sample(:)];
+end
+background=[];
+for i=1:size(windows_back)
+    sample=I_sub(windows_back(i,1):windows_back(i,2),windows_back(i,3):windows_back(i,4));
+    background=[background;sample(:)];
+end
+figure,hist(forground,255)
+figure,hist(background,255)
+
 end
 
