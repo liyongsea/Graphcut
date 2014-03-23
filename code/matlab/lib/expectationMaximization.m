@@ -22,7 +22,7 @@ for l=1:L
         if (flag)
             sigma(:,:,j)=((repmat(Rj,[1 dim]).*diffXmu)'*diffXmu)/sR;
         else
-            sigma(:,:,j)=trace(0.5*diffXmu*((repmat(Rj,[1 dim]).*diffXmu)'))/sR*diag([1 1]) ;
+            sigma(:,:,j)=trace(0.5*diffXmu*((repmat(Rj,[1 dim]).*diffXmu)'))/sR*eye(dim) ;
         end
     end
     %===========E-step
