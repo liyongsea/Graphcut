@@ -3,15 +3,12 @@ function shadow=getShadowMask(I,para)
     if (strcmp(para.method,'simple_kmeans'))
         shadow=getShadowMask_simple_kmeans(I,para.k);
     end
+    
     if (strcmp(para.method,'croissance_naive'))
-        I_seuil=zeros(size(I));
-        s=0.15;
         %detection par seuillage
-        I_seuil((I<s))=1;
-        I_seuil((I>=s))=0;
-        figure;
-        imshow((I<s));
-        tolerance=0.05;
+        I_seuil=getShadowMask_simple_kmeans(I,para.k);
+        %I_seuil=I<0.1255;
+        tolerance=para.tolerance;
         [M,N]=size(I);
         Y=zeros(M,N);
         for i=1:M
@@ -25,8 +22,9 @@ function shadow=getShadowMask(I,para)
     end
     
     if (strcmp(para.method,'croissance'))
-        tolerance=0.08;
-        seed=getShadowMask_simple_kmeans(I,5);
+        tolerance=para.tolerance;
+        seed=getShadowMask_simple_kmeans(I,para.k);
+        %seed=I<0.1255;
         shadow=region_growing(I,seed,tolerance);
         figure(),subplot(121);imshow(seed)
         subplot(122);imshow(shadow)

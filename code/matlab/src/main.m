@@ -18,7 +18,9 @@ I_sub=double(I_sub)/255;
 figure(),hist(I_sub(:),255);
 para=[];
 para.method='croissance';
-% para.k=5;
+para.k=5;
+para.tolerance=0.08;
+%para.tolerance=5/255;
 shadow=getShadowMask(I_sub,para);
 
 h_out=figure(5),I_out=drawMask(I_sub,shadow,[1,0,0]);
@@ -30,39 +32,39 @@ h_out=figure(5),I_out=drawMask(I_sub,shadow,[1,0,0]);
 % Ireg=min_exacte_binaire_graph_cut_a_completer(double(I_sub),m1,m2,gamma);
 % figure(),imshow(Ireg)
 %%
-% user_define=0;
-% if (user_define)
-%     windows_for=getSubSample(I_sub,[1 0 0]);
-%     windows_back=getSubSample(I_sub,[0 0 1]);
-%     save([dataPath '/forground_win.mat'],'windows_for','-ASCII')
-%     save([dataPath '/background_win.mat'],'windows_back','-ASCII')
-% else 
-%     windows_for=load([dataPath '/forground_win.mat'],'-ASCII')
-%     windows_back=load([dataPath '/background_win.mat'],'-ASCII')
-% end
-% h_out, hold on;
-% drawWindows(windows_for,[1,0,0]);
-% drawWindows(windows_back,[0,0,1]);
-% %%
-% forground=[];
-% for i=1:size(windows_for)
-%     sample=I_sub(windows_for(i,1):windows_for(i,2),windows_for(i,3):windows_for(i,4));
-%     forground=[forground;sample(:)];
-% end
-% background=[];
-% for i=1:size(windows_back)
-%     sample=I_sub(windows_back(i,1):windows_back(i,2),windows_back(i,3):windows_back(i,4));
-%     background=[background;sample(:)];
-% end
-% figure,
-% subplot(121),hist(forground,255)
-% subplot(122),hist(background,255)
-% %%
-% 
-% for_mixture=GaussianMixture(forground,5);
-% back_mixture=GaussianMixture(background,5);
-% %%
-% Ireg=graph_cut_1Dgaussian(double(I_sub),m1,m2,gamma);
+user_define=0;
+if (user_define)
+    windows_for=getSubSample(I_sub,[1 0 0]);
+    windows_back=getSubSample(I_sub,[0 0 1]);
+    save([dataPath '/forground_win.mat'],'windows_for','-ASCII')
+    save([dataPath '/background_win.mat'],'windows_back','-ASCII')
+else 
+    windows_for=load([dataPath '/forground_win.mat'],'-ASCII')
+    windows_back=load([dataPath '/background_win.mat'],'-ASCII')
+end
+h_out, hold on;
+drawWindows(windows_for,[1,0,0]);
+drawWindows(windows_back,[0,0,1]);
+%%
+forground=[];
+for i=1:size(windows_for)
+    sample=I_sub(windows_for(i,1):windows_for(i,2),windows_for(i,3):windows_for(i,4));
+    forground=[forground;sample(:)];
+end
+background=[];
+for i=1:size(windows_back)
+    sample=I_sub(windows_back(i,1):windows_back(i,2),windows_back(i,3):windows_back(i,4));
+    background=[background;sample(:)];
+end
+figure,
+subplot(121),hist(forground,255)
+subplot(122),hist(background,255)
+%%
+
+for_mixture=GaussianMixture(forground,5);
+back_mixture=GaussianMixture(background,5);
+%%
+Ireg=graph_cut_1Dgaussian(double(I_sub),for_mixture,back_mixture,beta,gamma);
 
 end
 
