@@ -36,6 +36,6 @@ for l=1:L
     R=Palpha./repmat(Palpha_sum,[1,K]);
     like=[like sum(log(sum(Palpha,2)))];
 end
-figure,plot([1:1:L],like);
+%figure,plot([1:1:L],like);
 
 end

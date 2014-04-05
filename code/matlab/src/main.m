@@ -1,14 +1,16 @@
  %%read data
-function main
+
 close all
 clear all
+rng('default');
 %%
 dataPath='/home/li/MVA/Graphcut_shadow/data';
 I=imread('/home/li/MVA/Graphcut_shadow/data/toulouse1_qb.gif');
 size(I);
-%%
-%select sub window
-window_size=[200,200];
+%% select sub window
+%
+%window_size=[200,200];
+window_size=[50,50];
 window_center=[1400,1400];
 I_sub=I(window_center(1)-window_size(1):window_center(1)+window_size(1),window_center(2)-window_size(2):window_center(2)+window_size(2));
 figure(),imshow(I_sub);
@@ -61,10 +63,17 @@ subplot(121),hist(forground,255)
 subplot(122),hist(background,255)
 %%
 
-for_mixture=GaussianMixture(forground,5);
-back_mixture=GaussianMixture(background,5);
-%%
-Ireg=graph_cut_1Dgaussian(double(I_sub),for_mixture,back_mixture,beta,gamma);
+for_mixture=GaussianMixture(forground,8);
+back_mixture=GaussianMixture(background,8);
 
-end
+x=[0:0.001:1]';
+figure(),subplot(121),drawGaussianMixture(for_mixture,x);
+subplot(122),drawGaussianMixture(back_mixture,x);
+%%
+beta=0.;
+gamma=0.2;
+
+Ireg=graph_cut_1Dgaussian(double(I_sub),for_mixture,back_mixture,beta,gamma);
+figure(),subplot(121),imshow(I_sub);subplot(122),imshow(Ireg);
+
 

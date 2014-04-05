@@ -85,9 +85,9 @@ void compute_graph_cut(double * Id, double * Ir, long W, long H, double v1, doub
 		}
             if(i<W-1)
 		{
-		double diff=abs(Id[pix]-Id[pix+W]);
+		double diff=abs(Id[pix]-Id[pix+H]);
 		double vpq=beta*exp(-0.5*diff);
-                g->add_edge(nodes[pix],nodes[pix+W],vpq,vpq);
+                g->add_edge(nodes[pix],nodes[pix+H],vpq,vpq);
 		}
         }
     }
@@ -141,8 +141,8 @@ const mxArray *prhs[])
     }
     
     long W,H;
-    W = mxGetM(prhs[0]);
-    H = mxGetN(prhs[0]);
+    W = mxGetN(prhs[0]);
+    H = mxGetM(prhs[0]);
     
   /* On récupère les paramètres scalaires */
     double beta,v1,v2;
@@ -151,7 +151,7 @@ const mxArray *prhs[])
     v2=*mxGetPr(prhs[2]);
     
   /* On crée l'image de sortie */
-    plhs[0] = mxCreateDoubleMatrix(W,H, mxREAL);
+    plhs[0] = mxCreateDoubleMatrix(H,W, mxREAL);
     
   /* On récupère les adresses des matrices d'entrée et de sortie */
     double *Id, *Ir;

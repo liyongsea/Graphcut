@@ -12,7 +12,7 @@ function shadow=region_growing(I,seed,tolerance)
         seed(neighbor_toGrow)=1;
         neighbor_tovisit=imdilate(seed,se)&~seed;
         min_diff=min(abs(I(neighbor_tovisit>0)-mean_intensity));
-        sum(seed(:))
+        %sum(seed(:))
     end
     shadow=seed;
 
