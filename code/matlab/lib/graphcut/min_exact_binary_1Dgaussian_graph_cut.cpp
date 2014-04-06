@@ -13,13 +13,24 @@
 #include "maxflow.cpp"
 
 //evaluate the value of a mixture of N componant on x
-double evaluate_mixture(double x, double* mu, double* sigma, double* pi, long N)
+//double evaluate_mixture(double x, double* mu, double* sigma, double* pi, long N)
+//{
+//	double res=0;
+//	for (int i =0;i<N;i++)
+//	{
+//		double g=pi[i]/sqrt(2*3.14*sigma[i])*exp(-0.5*(x-mu[i])*(x-mu[i])/sigma[i]);
+//		res+=(g);
+//	}
+//	return res;  
+//}
+double evaluate_minus_log_max_mixture(double x, double* mu, double* sigma, double* pi, long N)
 {
-	double res=0;
+	double res=-log(pi[0])+0.5*log(2*3.14*sigma[0])+(0.5*(x-mu[0])*(x-mu[0])/sigma[0]);
 	for (int i =0;i<N;i++)
 	{
-		double g=pi[i]/sqrt(2*3.14*sigma[i])*exp(-0.5*(x-mu[i])*(x-mu[i])/sigma[i]);
-		res+=(g);
+		double g=-log(pi[i])+0.5*log(2*3.14*sigma[i])+(0.5*(x-mu[i])*(x-mu[i])/sigma[i]);
+		if (g<res) res=g;//we minimize the potential (- log likelyhood)
+		//res+=(g);
 	}
 	return res;  
 }
@@ -32,7 +43,7 @@ double attache_aux_donnees(double noisy, double * m, long N)
     pi=m;
     mu=m+N;
     sigma=mu+N;
-    return log(evaluate_mixture(noisy, mu, sigma, pi, N)) ;
+    return evaluate_minus_log_max_mixture(noisy, mu, sigma, pi, N);
 }
 
 
@@ -156,8 +167,8 @@ const mxArray *prhs[])
     }
     
     long W,H,N;
-    W = mxGetM(prhs[0]);
-    H = mxGetN(prhs[0]);
+    W = mxGetN(prhs[0]);//mxGetN :Number of columm in array
+    H = mxGetM(prhs[0]);//mxGetM : Number of rows in array
     N = mxGetM(prhs[1]);
 
   /* On récupère les paramètres scalaires */
@@ -167,7 +178,7 @@ const mxArray *prhs[])
     
     
   /* On crée l'image de sortie */
-    plhs[0] = mxCreateDoubleMatrix(W,H, mxREAL);
+    plhs[0] = mxCreateDoubleMatrix(H,W, mxREAL);
     
   /* On récupère les adresses des matrices d'entrée et de sortie et les mixture*/
     double *Id, *Ir, *m1, *m2;
