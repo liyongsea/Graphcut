@@ -24,10 +24,14 @@ function shadow=getShadowMask(I,para)
     if (strcmp(para.method,'croissance'))
         tolerance=para.tolerance;
         seed=getShadowMask_simple_kmeans(I,para.k);
-        %seed=I<0.1255;
         shadow=region_growing(I,seed,tolerance);
-        figure(),subplot(121);imshow(seed)
-        subplot(122);imshow(shadow)
+    if (isfield(para,'theta'))
+        m_se=computeSE(para.l,para.theta);
+        shadow_clean=imopen(shadow,m_se);
+    end
+%         figure(),subplot(121);imshow(shadow_clean)
+%         subplot(122);imshow(shadow)
+        shadow=shadow_clean;
     end
 end
 
