@@ -9,8 +9,8 @@ I=imread('/home/li/MVA/Graphcut_shadow/data/toulouse1_qb.gif');
 %I=imread('/home/li/MVA/Graphcut_shadow/data/zebra.jpg');
 figure,imshow(I);
 %% select sub window
-window_size=[200,200];
-% window_size=[80,80];
+% window_size=[200,200];
+window_size=[80,80];
 window_center=[1350,1350];
 % window_center=[750,800];
 I_sub=I(window_center(1)-window_size(1):window_center(1)+window_size(1),window_center(2)-window_size(2):window_center(2)+window_size(2));
@@ -27,23 +27,24 @@ para.k=5;% kmeans centers
 para.tolerance=0.08;%growing region threshold
 %para.tolerance=5/255;
 para.theta=7*pi/16+pi;%shadow direction
-para.l=10;
+para.l=12;
 shadow=getShadowMask(I_sub,para);
 
 
 h_out=figure(5),imshow(I_sub),hold on,drawMaskContour(shadow);
 %% generate fussy landscape
-para_fuzzy.sigma=5;
+close all
+para_fuzzy.sigma=20;
 para_fuzzy.theta=para.theta;
-para_fuzzy.l=para.l;
+para_fuzzy.l=30;
 
 objet=fuzzy(shadow, para_fuzzy);
-s1=0.7; % double thresholds
-s2=0.9;
+s1=0.6; % double thresholds
+s2=0.98;
 objet_seuil=(objet>max(objet(:))*s1 & objet<max(objet(:))*s2);
 figure;
-imshow(objet_seuil);
-figure,drawMask(I_sub,objet_seuil,[1,0,0]);
+imshow(objet);
+figure,drawMask(I_sub,shadow,[1 0 0]),hold on,drawMaskContour(objet_seuil)%,hold on,drawMaskContour(shadow)
 %% grabcut
 user_define=1;
 if (user_define)

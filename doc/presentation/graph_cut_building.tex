@@ -1,0 +1,179 @@
+
+\documentclass[compress]{beamer} %this is to use copressed header from the
+\usepackage{etex}
+\usepackage{beamerthemeshadow} %our theme, later you can change it
+\usepackage[frenchb]{babel}
+\usepackage{fancyhdr} % Required for custom headers
+\usepackage[utf8]{inputenc}
+\usepackage[lined,boxed]{algorithm2e}
+\usepackage[all]{xy}
+\usepackage{animate} %need the animate.sty file
+\graphicspath{{./Figure/}} 
+% editing header
+\setbeamertemplate{headline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1.8ex,leftskip=1em,left]{section in head/foot}%
+    \usebeamerfont{subsection in head/foot}\hspace*{5ex}\insertsectionhead
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1.8ex,left,leftskip=1em]{subsection in head/foot}%
+    \usebeamerfont{section in head/foot}\insertshorttitle\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+% editing footer
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor\hspace*{2ex}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\definecolor{orange}{rgb}{1,0.5,0}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\definecolor{darkblue}{rgb}{0,0,0.5}
+
+\def\etal{et al.\ }
+\def\ie{i.e.\ }
+\def\eg{e.g.\ }
+
+%put a wide hat over the argumetn
+\newcommand{\lift}[1]{\ensuremath{\widehat{#1}}}
+
+%put a wide hat over the argumetn
+%\newcommand{\lifto}[1]{\ensuremath{\check{#1}}}
+\newcommand{\lifto}[1]{\ensuremath{\overset{_{_{\circ}}}{#1}}}
+
+
+% stack vector
+\newcommand{\stackv}[1]{\ensuremath{\vet{v}\left( {#1} \right)}}
+\newcommand{\ustackv}[1]{\ensuremath{\inv{\vet{v}}\left( {#1} \right)}}
+
+% symmetric stack vector
+\newcommand{\stackvs}[1]{\ensuremath{\vet{v}_{\textit{sym}}\left( {#1} \right)}}
+
+% Matrix Lifting: put a wide hat over the argument intended to be a matrix
+\newcommand{\mlift}[1]{\ensuremath{\lift{\mat{#1}}}}
+\newcommand{\mlifto}[1]{\ensuremath{\lifto{\mat{#1}}}}
+
+% Vector Lifting: put a wide hat over the argument intended to be a matrix
+\newcommand{\vlift}[1]{\ensuremath{\lift{\vet{#1}}}}
+\newcommand{\vlifto}[1]{\ensuremath{\lifto{\vet{#1}}}}
+
+\newcommand{\bmat}[1]{\ensuremath{\begin{bmatrix} #1 \end{bmatrix}}}
+% Vector: print the argument as a vector
+\newcommand{\vet}[1]{\ensuremath{\mathbf{#1}}}
+
+% Matrix: print the argument as a matrix
+\newcommand{\mat}[1]{\ensuremath{\,\mathtt{#1}\,}}
+
+% Inverse: print a -1 on the top right of the argument 
+\newcommand{\inv}[1]{\ensuremath{{#1}^{\text{-}1}}}
+
+% Inverse: print a -1 on the top right of the argument 
+\newcommand{\minv}[1]{\ensuremath{\mat{{#1}}^{\text{-}1}}}
+
+% Transpose: print a T on the top right of the argument 
+\newcommand{\tra}[1]{\ensuremath{{#1}^{\!\mathsf{T}}}}
+
+% Transpose Matrix: print a T on the top right of the argument intended to be a matrix 
+\newcommand{\mtra}[1]{\ensuremath{\tra{\mat{#1}}}}
+
+% Transpose Vector: print a T on the top right of the argument intended to be a vector
+\newcommand{\vtra}[1]{\ensuremath{\tra{\vet{#1}}}}
+
+% minus transpose:  print a -T on the top right of the argument
+\newcommand{\ment}[1]{\ensuremath{{#1}^{\text{-}\mathsf{T}}}}
+
+% minus transpose matrix:  print a -T on the top right of the argument
+\newcommand{\mment}[1]{\ensuremath{{\mat{#1}}^{\text{-}\mathsf{T}}}}
+
+% Cross Matrix:  print the argument in the cross matrix notation
+\newcommand{\crmat}[1]{\ensuremath{\left[{#1}\right]_{\times}}}
+
+%random variable
+\newcommand{\rand}[1]{\ensuremath{\mathbb{#1}}}
+
+%insert 2 figures on a row
+\newcommand{\insertTwoF}[4]{
+  \begin{figure}[h!]
+    \centering
+    \begin{minipage}{#4\linewidth}
+    \includegraphics[width=\linewidth]{#1}
+    \end{minipage}
+    \begin{minipage}{#4\linewidth}
+    \includegraphics[width=\linewidth]{#2}
+    \end{minipage}
+      \caption{#3}
+  \end{figure}  
+}
+
+\newcommand{\insertF}[3]{
+  \begin{figure}[h!]
+    \centering
+    \begin{minipage}{#3\linewidth}
+    \includegraphics[width=\linewidth]{#1}
+    \end{minipage}  
+      \caption{#2}
+  \end{figure}  
+}
+
+%enable numbering captions for the images
+\setbeamertemplate{caption}[numbered]
+
+
+%begining of the doc
+\begin{document}
+
+ \title{Building Detection Using Graph Cut}  
+ %\author{Jia LI}
+ %\date{August, 2013} 
+
+ %title page
+ \begin{frame}
+\titlepage
+    \centering
+    \begin{minipage}{0.4\textwidth}
+    \begin{flushleft} \large
+    \emph{Author:}\\
+    LI Jia\\
+    XU Minmin\\
+    
+    \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+    \begin{flushright} \large
+    \emph{Course:}\\
+    Méthodes avancées de traitement d'images 
+    \end{flushright}
+    \end{minipage}\\[3cm]
+ \end{frame}
+
+  \begin{frame}
+   {\Huge
+     \vspace {0.15\textwidth}
+     \begin{columns}
+       \begin{column}{0.3\textwidth}
+       \end{column}
+       \begin{column}{0.3\textwidth}
+        \text{Thank you!}
+       \end{column}
+       \begin{column}{0.3\textwidth}
+       \end{column}
+     \end{columns}
+   }
+   \vspace {0.025\textwidth}
+   \begin{center}
+   {\huge Q\&A}
+   \end{center}
+ \end{frame}
+  
+\end{document}
