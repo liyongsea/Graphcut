@@ -21,7 +21,7 @@ function res=grabcut_oneshot_multi(I_sub,forgroundMask,para)
 
     %%
     beta=para.beta;%10;
-    gamma=para.gamma;5;
+    gamma=para.gamma;%5;
 
     res=graph_cut_binary_precompute(back_likily,for_likily,dx,dy,beta,gamma);
     
