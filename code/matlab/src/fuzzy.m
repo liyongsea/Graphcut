@@ -30,10 +30,10 @@ m_se_gaussian=m_se_gaussian./max(m_se_gaussian(:));
 m_se_fuzzy=m_se_rev.*m_se_gaussian;
 
 se_fuzzy=strel(m_se_rev,m_se_fuzzy);
-figure,imshow(m_se_fuzzy)
+% figure,imshow(m_se_fuzzy)
 objet=imdilate(shadow_per,se_fuzzy).*shadow_C;
-figure;
-imagesc(objet);colormap(gray)
+% figure;
+% imagesc(objet);colormap(gray)
 
 end
 

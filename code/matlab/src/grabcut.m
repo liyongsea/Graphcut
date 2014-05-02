@@ -1,4 +1,4 @@
-function [res,evol]=grabcut(I_sub,forgroundMask,para)
+function [res,evol]=grabcut(I_sub,forgroundMask,backgroundMask,para)
 % grab cut algorithm for forground background seperation.
 % para should containt the following field :
 % i) max_iteration
@@ -8,9 +8,9 @@ function [res,evol]=grabcut(I_sub,forgroundMask,para)
 
 
     evol=[];
-    mask=forgroundMask;
+    mask=grabcut_oneshot_multi(I_sub,forgroundMask,backgroundMask,para);
     for i=1:para.max_iteration
-        mask=grabcut_oneshot_multi(I_sub,mask,para);
+        mask=grabcut_oneshot_multi(I_sub,mask,[],para);
         evol(:,:,i)=mask;
     end
     res=mask;

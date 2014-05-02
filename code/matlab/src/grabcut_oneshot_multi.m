@@ -1,10 +1,14 @@
-function res=grabcut_oneshot_multi(I_sub,forgroundMask,para)
+function res=grabcut_oneshot_multi(I_sub,forgroundMask,backgroundMask,para)
     forground=extractFromMask(I_sub,forgroundMask);
-    background=extractFromMask(I_sub,1-forgroundMask);
+    if (length(backgroundMask(:))==0)
+        background=extractFromMask(I_sub,~forgroundMask);
+    else
+        background=extractFromMask(I_sub,backgroundMask);
+    end
 
   
-    for_mixture=GaussianMixture(forground,3);
-    back_mixture=GaussianMixture(background,3);
+    for_mixture=GaussianMixture(forground,2);
+    back_mixture=GaussianMixture(background,2);
     I_pixels=reshape(I_sub,[],size(I_sub,3));
     
     %get -log likilyhook
