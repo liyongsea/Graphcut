@@ -158,6 +158,7 @@
     \end{minipage}\\[3cm]
  \end{frame}
 
+ \section{Plan}
  \begin{frame}
   \scriptsize
   {
@@ -174,24 +175,57 @@
      \item ROI region
      \item Foreground region
     \end{enumerate}
-
-
   \end{enumerate}
-
   %\frametitle{Table of contents}
   %\tableofcontents
-
   }
  \end{frame} 
  
- 
+ \section{Introduction}
  \begin{frame}
-  \insertTwoF{lille}{toulouse}{Origin images}{0.45}
+  \frametitle{Motivation}
+  \begin{itemize}
+   \item Application : urban monitoring, change detection, estimation of human population, etc.
+   \item Challenging : complex background, without human interacting.
+  \end{itemize}
+  \insertF{vatican-city-satellite-image-ikonos-high-resolution}{Example of Arian Urban Image}{0.4}
  \end{frame}
 
  \begin{frame}
-  \insertTwoF{lille_shadow}{toulouse_shadow}{Shadow detection}{0.45}
+  \frametitle{Intuition}
+  Approach propose by Ok {\textit{et. al}} \cite{Ok:2013} : 
+  \begin{itemize}
+   \item Grab cut (Rother \cite{Rother:2004}) : semi-automatic segmentation, with a user defined foreground-background window.
+   \insertTwoF{grab_cut}{grab_cut_result}{Grab cut method illustration}{0.45}
+   \item Foreground-background estimation : prior knowledge, shadow, vegetation ...
+  \end{itemize}
  \end{frame}
+
+ \begin{frame}
+  \frametitle{Steps}
+ 	\begin{figure}[h!]
+	\centering
+	\begin{minipage}{0.4\linewidth}
+	\includegraphics<1>[width=\linewidth]{lille}
+	\includegraphics<2>[width=\linewidth]{lille_shadow}
+	\includegraphics<3>[width=\linewidth]{lille_vegetation}
+	\end{minipage}
+	\begin{minipage}{0.4\linewidth}
+	\includegraphics<1>[width=\linewidth]{toulouse}
+	\includegraphics<2>[width=\linewidth]{toulouse_shadow}
+	\includegraphics<3>[width=\linewidth]{toulouse_shadow}
+	\end{minipage}
+	    \caption{Origin images}
+	\end{figure}      
+ \end{frame}
+%  
+%  \begin{frame}
+%   \insertTwoF{lille}{toulouse}{Origin images}{0.45}
+%  \end{frame}
+
+%  \begin{frame}
+%   \insertTwoF{lille_shadow}{toulouse_shadow}{Shadow detection}{0.45}
+%  \end{frame}
 
  
   \begin{frame}
@@ -240,5 +274,11 @@
    {\huge Q\&A}
    \end{center}
  \end{frame}
-  
+
+\begin{frame}\frametitle{References}
+\frametitle{References}
+\bibliographystyle{splncs}
+\bibliography{graph}
+\end{frame}
+
 \end{document}
