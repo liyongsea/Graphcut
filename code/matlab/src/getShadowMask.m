@@ -1,4 +1,5 @@
 function shadow=getShadowMask(I,para)
+% 
     shadow=[];
     if (strcmp(para.method,'simple_kmeans'))
         shadow=getShadowMask_simple_kmeans(I,para.k);
