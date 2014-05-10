@@ -126,6 +126,8 @@
   \end{figure}  
 }
 
+\newcommand{\bfE}{\mathbf{E}}
+\newcommand{\bfz}{\mathbf{z}}
 
 %enable numbering captions for the images
 \setbeamertemplate{caption}[numbered]
@@ -208,8 +210,8 @@
   \begin{enumerate}
   \item \textbf{Grab Cut} 
     \begin{enumerate}
-     \item approach
-     \item synthetic test
+     \item Approach
+     \item Experience
     \end{enumerate}
   \item Automation
     \begin{enumerate}
@@ -224,60 +226,48 @@
   }
  \end{frame}  
  
+ \section{Approach}
  \begin{frame}
-  \frametitle{Steps}
- 	\begin{figure}[h!]
-	\centering
-	\begin{minipage}{0.4\linewidth}
-	\includegraphics<1>[width=\linewidth]{lille}
-	\includegraphics<2>[width=\linewidth]{lille_shadow}
-	\includegraphics<3>[width=\linewidth]{lille_vegetation}
-	\end{minipage}
-	\begin{minipage}{0.4\linewidth}
-	\includegraphics<1>[width=\linewidth]{toulouse}
-	\includegraphics<2>[width=\linewidth]{toulouse_shadow}
-	\includegraphics<3>[width=\linewidth]{toulouse_shadow}
-	\end{minipage}
-	    \caption{Origin images}
-	\end{figure}      
- \end{frame}
-%  
-%  \begin{frame}
-%   \insertTwoF{lille}{toulouse}{Origin images}{0.45}
-%  \end{frame}
-
-%  \begin{frame}
-%   \insertTwoF{lille_shadow}{toulouse_shadow}{Shadow detection}{0.45}
-%  \end{frame}
-
- 
-  \begin{frame}
-  \insertTwoF{lille_vegetation}{toulouse_shadow}{vegetation detection}{0.45}
+  \frametitle{Image Segmentation by Graph Cut}
+  Gibb's energy for image segmentation :
+  \[
+  \bfE(\alpha,\theta,\bfz)=U(\alpha,\theta,\bfz)+V(\alpha,\bfz)
+  \]
+  \begin{itemize}
+   \item<1> $\bfz=(z_1,z_2,...,z_N)$, a $N$-pixel image.
+   \item<1> $\alpha=(\alpha_1,\alpha_2,...,\alpha_N)$ label for each pixel, typically $\alpha_n\in\{0,1\}$.
+   \item<1> $\theta$, background model for each label/class, empirical histogram, GMM...
+  \end{itemize}
  \end{frame}
 
  \begin{frame}
-  \insertTwoF{lille_object}{toulouse_object}{object of interest}{0.45}
- \end{frame}
+  \frametitle{Image Segmentation by Graph Cut}
+  Gibb's energy for image segmentation :
+  \[
+  \bfE(\alpha,\theta,\bfz)=U(\alpha,\theta,\bfz)+V(\alpha,\bfz)
+  \]
+  \begin{itemize}
+  \item $U=\sum_n -\log(p_\theta (\alpha_n,z_n))$ the likelihood term.
+  \item $V=\gamma \sum_{n,m\in \mathbf{C}}[\alpha_m \neq \alpha_n] \exp(-\beta|z_n-z_m|^2)$ the regularity term, $\beta=0$ correspond to the Isings model.
+  \end{itemize}
 
- \begin{frame}
-  \insertTwoF{lille_shadow_clean}{toulouse_shadow}{clean shadow by eliminate vegetation}{0.45}
+  Segmentation : $\hat \alpha= \arg\min\limits_\alpha \bfE(\alpha,\theta)$ 
+  \begin{itemize}
+   \item Standard graph cut for minimization. ([Boykov and Jolly 2001; Kolmogorov and Zabih 2002]) 
+  \end{itemize}
  \end{frame}
  
  \begin{frame}
-  \insertTwoF{lille_object_clean}{toulouse_object}{cleaned object of interest}{0.45}
- \end{frame}
+  \frametitle{Grab Cut}
+  Grab cut versus standard graph cut
+  \begin{itemize}
+   \item GMM for the likelihood term.
+   \item Iterative estimation and parameters learning instead of a one-shot minimization.
+   \item Relaxed user interactive labeling.
+  \end{itemize}
 
- \begin{frame}
-  \insertTwoF{lille_for_back}{toulouse_for_back}{foreground background mask}{0.45}
  \end{frame}
-
-  \begin{frame}
-    \insertF{lille_result}{result}{0.85}
-  \end{frame}
  
-  \begin{frame}
-    \insertF{toulouse_result}{result}{0.85}
- \end{frame}
  
   \begin{frame}
    {\Huge
