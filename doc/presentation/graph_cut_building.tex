@@ -259,9 +259,9 @@
  
  \begin{frame}
   \frametitle{Grab Cut}
-  Grab cut versus standard graph cut
+  Grab cut for foreground background separation:
   \begin{itemize}
-   \item GMM for the likelihood term.
+   \item GMM for the likelihood term. One GMM for the foreground and the other for the background.
    \item Iterative estimation and parameters learning instead of a one-shot minimization.
    \item Relaxed user interactive labeling.
   \end{itemize}
@@ -271,7 +271,34 @@
  
  \begin{frame}
   \frametitle{Grab Cut}
-  Energy for grab cut :
+  Energy for grab cut : 
+  \[
+  \bfE(\alpha,\mathbf{k},\theta,\bfz)=U(\alpha,\mathbf{k},\theta,\bfz)+V(\alpha,\bfz)
+  \]
+
+ \begin{itemize}
+  \item $\mathbf{k}=(k_1,k_2,...,k_N)$, with $k_n\in \{1,...,K\}$ assigning each pixel to a GMM component.
+  \item $U(\alpha,\mathbf{k},\theta,\bfz)=\sum_n D_n(\alpha,\mathbf{k},\theta,\bfz)$, with 
+  \[
+  \begin{split}
+  D_n(\alpha,\mathbf{k},\theta,\bfz)&=-\log(p_\theta (\alpha_n,k_n,z_n)) -\log(\pi(\alpha_n,k_n)) \\
+  &=-\log(\pi(\alpha_n,k_n))-1/2\log \det \Sigma(\alpha_n,k_n)\\
+  &-1/2 \tra{[z_n-\mu(\alpha_n,k_n)]}\inv{\Sigma(\alpha_n,k_n)}[z_n-\mu(\alpha_n,k_n)]
+  \end{split}
+  \]
+
+ \end{itemize}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Minimization Algorithm}
+  \begin{enumerate}
+   \item \textit{Initialization}. $\alpha_n=1$ for $n\in \mathbf{T}_u$, $\alpha_n=0$ otherwise.
+   \item \textit{Learning}. $\mathbf{k}=\arg\min\limits_{\mathbf{k}} U(\alpha,\mathbf{k},\theta,\bfz)$, $\theta=\arg\min\limits_{\theta} U(\alpha,\mathbf{k},\theta,\bfz)$
+   \item \textit{Estimation}. $\min\limits_{\alpha}\min\limits_{\mathbf{k}}\bfE(\alpha,\mathbf{k},\theta,\bfz) $
+   \item \textit{Iteration}. Repeat 2,3 until convergence.
+  \end{enumerate}
+
  \end{frame}
  
  \section{Experience}
