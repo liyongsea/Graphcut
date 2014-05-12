@@ -7,7 +7,7 @@ close all
 clear all
 rng('default');
 %% read image
-dataPath='/home/li/MVA/Graphcut_shadow/data/lille/';
+dataPath='D:/Graphcut/data/lille/';
 I=imread([dataPath '/Image']);
 I=double(I)./255;
 % I=imread('/home/li/MVA/Graphcut_shadow/data/toulouse1_qb.gif');
@@ -62,14 +62,14 @@ figure,imshow(shadow_clean)
 
 
 %% range each shadow component by size
-
+part=1;
 [L_s, num_s]=rangeShadow(shadow_clean);
-% figure,imshow(double(L_s==num_s(part)))
+figure,imshow(double(L_s==num_s(part)))
 %%
 building=zeros(size(I,1),size(I,2));
-for part=1:40
-% part=8;
-part
+% for part=1:40
+% part=1;
+% part
 % building segmentation for each component
 
 shadow_i=(L_s==num_s(part));
@@ -80,7 +80,7 @@ para_fuzzy.l=10;
 ROI=fuzzy_flat(shadow_i, para_fuzzy);
 window_i=getSubwindow(ROI);
 ROI=(ROI&(~veg_mask));
-% figure,subplot(121),imshow(I),hold on,drawMaskContour(ROI),hold on, drawWindows(window_i,[1 0 0]),subplot(122),imshow(ROI)
+figure,subplot(121),imshow(I),hold on,drawMaskContour(ROI),hold on, drawWindows(window_i,[1 0 0]),subplot(122),imshow(ROI)
 
 %
 xmin=window_i(1);
@@ -99,12 +99,12 @@ s2=1;
 objet_seuil=(objet>max(objet(:))*s1 & objet<max(objet(:))*s2);
 % figure;
 % imshow(objet);
-% figure,drawMask(I_sub,shadow_sub,[1 0 0]),hold on,drawMaskContour(objet_seuil&(~veg_sub))%,hold on,drawMaskContour(shadow)
+figure,drawMask(I_sub,shadow_sub,[1 0 0]),hold on,drawMaskContour(objet_seuil&(~veg_sub))%,hold on,drawMaskContour(shadow)
 
 
 forgroundMask=(objet_seuil&ROI_sub&(~shadow_sub)&(~veg_sub));
 backgroundMask=(~ROI_sub)|(veg_sub);
-% figure,subplot(131),imshow(I_sub),subplot(132),imshow(I_sub),hold on,drawMaskContour(forgroundMask),subplot(133),imshow(double(backgroundMask))
+figure,subplot(131),imshow(I_sub),subplot(132),imshow(I_sub),hold on,drawMaskContour(forgroundMask),subplot(133),imshow(double(backgroundMask))
 
 %
 if ( sum(forgroundMask(:))>30)
@@ -133,12 +133,12 @@ if ( sum(forgroundMask(:))>30)
 %        subplot(2,3,i+1), imshow(evol(:,:,i))
 %     end
 end
-end
+% end
 %%
 figure,drawMask(I,double(building),[0 0 1]);
 % figure, imshow(I), hold on, drawMaskContour(building)
 %% read ground truth
-Igt=imread([dataPath '/Image_groundtruth.png']);
+Igt=imread([dataPath 'Image_groundtruth.png']);
 Igt=(double(rgb2gray(Igt))./255)<0.9;
 figure,drawMask(I,double(Igt),[1 0 0]);
 

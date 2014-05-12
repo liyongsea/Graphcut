@@ -352,10 +352,10 @@
   \frametitle{shadow detection}
    Two steps: K-means and growth of region 
   \begin{itemize}
-   \item Use K-means to find the first peak and therefore find a simple threshold for shadows.
+   \item Use K-means to find the first peak and therefore find a simple threshold for shadows. Normally 5 or 6 cluster would be enough for the detection. 
   
-   \item Use the result of threshold as seed to apply method of growth of region to obtain the complete shadows.
-    \insertF{shadow}{Shadow detection}{0.5}
+   \item Use the result of threshold as seed to apply method of growth of region to obtain the complete shadows. We need to choose the tolerance.
+    \insertF{shadow}{Shadow detection}{0.4}
   \end{itemize}
  \end{frame} 
  
@@ -365,7 +365,7 @@
   \begin{itemize}
    \item Likelihood between the color and the color of vegetation.
    \end{itemize}
-   \insertF{vegetation}{Vegetation detection}{0.8}
+   %\insertF{vegetation}{Vegetation detection}{0.8}
  \end{frame} 
  
   \section{Clean shadows}
@@ -373,7 +373,8 @@
   \frametitle{Clean shadows}
   \begin{itemize}
    \item First remove the detected vegetation from the shadow.
-   \item Remove the shadow corresponding to the detected vegetation by double threshold of fuzzy map on each connected component.
+   \item Remove the shadow corresponding to the detected vegetation by double threshold $\theta_1, \theta_2$ of fuzzy map on each connected component. 
+   $\nu_{L,\lambda,\sigma,\kappa}=\nu_{L,\lambda,\kappa}*\nu_{\sigma,\kappa}$
    \insertF{cleaned_shadow}{Cleaned shadow}{0.5}
   \end{itemize}
  \end{frame} 
@@ -397,7 +398,7 @@
     
   \begin{itemize}
    \item Construct shadow structural element with reversed sun direction and length to be configured.
-   \insertF{re_direction}{Structural element}{0.5}
+   %\insertF{re_direction}{Structural element}{0.5}
    \end{itemize}
  \end{frame} 
  
