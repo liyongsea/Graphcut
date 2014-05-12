@@ -6,6 +6,6 @@ function [yMix yGau]=evaluate_mixture(X,mixture)
    distr.cov=mixture.sigma(:,:,i);
    yGau(:,i)=mixture.pi(i)*evaluate_gaussian(X,distr)';
  end
- %yMix=max(yGau,[],2);
- yMix=sum(yGau,2);
+ yMix=max(yGau,[],2);
+%  yMix=sum(yGau,2);
 end
