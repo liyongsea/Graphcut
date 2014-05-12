@@ -10,5 +10,4 @@
 \beamer@sectionintoc {8}{Clean shadows}{14}{0}{8}
 \beamer@sectionintoc {9}{Foreground detection}{15}{0}{9}
 \beamer@sectionintoc {10}{ROI detection}{16}{0}{10}
-\beamer@sectionintoc {11}{ROI detection}{17}{0}{11}
-\beamer@sectionintoc {12}{Experience}{18}{0}{12}
+\beamer@sectionintoc {11}{Experience}{17}{0}{11}

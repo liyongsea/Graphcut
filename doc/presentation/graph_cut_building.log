@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.3)  12 MAY 2014 22:59
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9) (preloaded format=pdflatex 2013.10.3)  12 MAY 2014 23:22
 entering extended mode
 **graph_cut_building.tex
 (D:\Graphcut\doc\presentation\graph_cut_building.tex
@@ -1468,7 +1468,7 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 ] [2
 
 ]
-<./Figure/vatican-city-satellite-image-ikonos-high-resolution.jpg, id=132, 1076
+<./Figure/vatican-city-satellite-image-ikonos-high-resolution.jpg, id=128, 1076
 .02pt x 1154.3125pt>
 File: ./Figure/vatican-city-satellite-image-ikonos-high-resolution.jpg Graphic 
 file (type jpg)
@@ -1496,14 +1496,14 @@ LaTeX Warning: Citation `Ok:2013' on page 4 undefined on input line 204.
 
 LaTeX Warning: Citation `Rother:2004' on page 4 undefined on input line 204.
 
-<./Figure/grab_cut.png, id=164, 401.5pt x 268.00125pt>
+<./Figure/grab_cut.png, id=160, 401.5pt x 268.00125pt>
 File: ./Figure/grab_cut.png Graphic file (type png)
 
 <use ./Figure/grab_cut.png>
 Package pdftex.def Info: ./Figure/grab_cut.png used on input line 204.
 (pdftex.def)             Requested size: 128.42455pt x 85.72534pt.
 
-<./Figure/grab_cut_result.png, id=166, 413.545pt x 293.095pt>
+<./Figure/grab_cut_result.png, id=162, 413.545pt x 293.095pt>
 File: ./Figure/grab_cut_result.png Graphic file (type png)
 
 <use ./Figure/grab_cut_result.png>
@@ -1519,14 +1519,14 @@ on/Figure/grab_cut_result.png>] [5
 
 ] [7
 
-] <./Figure/graph_label.png, id=287, 514.92375pt x 372.39125pt>
+] <./Figure/graph_label.png, id=283, 514.92375pt x 372.39125pt>
 File: ./Figure/graph_label.png Graphic file (type png)
 
 <use ./Figure/graph_label.png>
 Package pdftex.def Info: ./Figure/graph_label.png used on input line 269.
 (pdftex.def)             Requested size: 122.91406pt x 88.88705pt.
 
-<./Figure/grab_label.png, id=288, 401.5pt x 299.1175pt>
+<./Figure/grab_label.png, id=284, 401.5pt x 299.1175pt>
 File: ./Figure/grab_label.png Graphic file (type png)
 
 <use ./Figure/grab_label.png>
@@ -1553,41 +1553,41 @@ Overfull \hbox (21.90005pt too wide) detected at line 291
 
 [9
 
-] <./Figure/init.png, id=344, 578.16pt x 433.62pt>
+] <./Figure/init.png, id=340, 578.16pt x 433.62pt>
 File: ./Figure/init.png Graphic file (type png)
  <use ./Figure/init.png>
 Package pdftex.def Info: ./Figure/init.png used on input line 323.
 (pdftex.def)             Requested size: 82.96957pt x 62.22156pt.
 
-<./Figure/fore_hist.png, id=345, 578.16pt x 433.62pt>
+<./Figure/fore_hist.png, id=341, 578.16pt x 433.62pt>
 File: ./Figure/fore_hist.png Graphic file (type png)
 
 <use ./Figure/fore_hist.png>
 Package pdftex.def Info: ./Figure/fore_hist.png used on input line 323.
 (pdftex.def)             Requested size: 82.96957pt x 62.22156pt.
 
-<./Figure/back_hist.png, id=346, 578.16pt x 433.62pt>
+<./Figure/back_hist.png, id=342, 578.16pt x 433.62pt>
 File: ./Figure/back_hist.png Graphic file (type png)
 
 <use ./Figure/back_hist.png>
 Package pdftex.def Info: ./Figure/back_hist.png used on input line 323.
 (pdftex.def)             Requested size: 82.96957pt x 62.22156pt.
 
-<./Figure/result_1.png, id=347, 578.16pt x 433.62pt>
+<./Figure/result_1.png, id=343, 578.16pt x 433.62pt>
 File: ./Figure/result_1.png Graphic file (type png)
 
 <use ./Figure/result_1.png>
 Package pdftex.def Info: ./Figure/result_1.png used on input line 323.
 (pdftex.def)             Requested size: 82.96957pt x 62.22156pt.
 
-<./Figure/result_2.png, id=348, 578.16pt x 433.62pt>
+<./Figure/result_2.png, id=344, 578.16pt x 433.62pt>
 File: ./Figure/result_2.png Graphic file (type png)
 
 <use ./Figure/result_2.png>
 Package pdftex.def Info: ./Figure/result_2.png used on input line 323.
 (pdftex.def)             Requested size: 82.96957pt x 62.22156pt.
 
-<./Figure/result_3.png, id=349, 578.16pt x 433.62pt>
+<./Figure/result_3.png, id=345, 578.16pt x 433.62pt>
 File: ./Figure/result_3.png Graphic file (type png)
 
 <use ./Figure/result_3.png>
@@ -1606,7 +1606,7 @@ NG copy)> <D:/Graphcut/doc/presentation/Figure/result_2.png (PNG copy)> <D:/Gra
 phcut/doc/presentation/Figure/result_3.png (PNG copy)>] [11
 
 ]
-<./Figure/shadow.png, id=403, 426.09187pt x 366.61969pt>
+<./Figure/shadow.png, id=399, 426.09187pt x 366.61969pt>
 File: ./Figure/shadow.png Graphic file (type png)
 
 <use ./Figure/shadow.png>
@@ -1617,68 +1617,68 @@ Package pdftex.def Info: ./Figure/shadow.png used on input line 360.
  <D:/Graphcut/doc/presentation/Figure/shadow.png (PNG copy)>] [13
 
 ]
-<./Figure/cleaned_shadow.png, id=459, 426.09187pt x 366.61969pt>
+File: ./Figure/shadow.png Graphic file (type png)
+ <use ./Figure/shadow.png>
+Package pdftex.def Info: ./Figure/shadow.png used on input line 379.
+(pdftex.def)             Requested size: 114.15417pt x 98.21664pt.
+
+<./Figure/cleaned_shadow.png, id=455, 426.09187pt x 366.61969pt>
 File: ./Figure/cleaned_shadow.png Graphic file (type png)
 
 <use ./Figure/cleaned_shadow.png>
-Package pdftex.def Info: ./Figure/cleaned_shadow.png used on input line 380.
-(pdftex.def)             Requested size: 142.6949pt x 122.7806pt.
+Package pdftex.def Info: ./Figure/cleaned_shadow.png used on input line 379.
+(pdftex.def)             Requested size: 114.15417pt x 98.21664pt.
  [14
 
  <D:/Graphcut/doc/presentation/Figure/cleaned_shadow.png (PNG copy)>]
-<./Figure/fuzzy_map.png, id=487, 422.32782pt x 316.18124pt>
+<./Figure/fuzzy_map.png, id=483, 422.32782pt x 316.18124pt>
 File: ./Figure/fuzzy_map.png Graphic file (type png)
 
 <use ./Figure/fuzzy_map.png>
-Package pdftex.def Info: ./Figure/fuzzy_map.png used on input line 392.
+Package pdftex.def Info: ./Figure/fuzzy_map.png used on input line 391.
 (pdftex.def)             Requested size: 114.15417pt x 85.46173pt.
 
-<./Figure/fore-back.png, id=488, 422.32782pt x 316.18124pt>
+<./Figure/fore-back.png, id=484, 348.55219pt x 182.93344pt>
 File: ./Figure/fore-back.png Graphic file (type png)
 
 <use ./Figure/fore-back.png>
-Package pdftex.def Info: ./Figure/fore-back.png used on input line 392.
-(pdftex.def)             Requested size: 114.15417pt x 85.46173pt.
+Package pdftex.def Info: ./Figure/fore-back.png used on input line 391.
+(pdftex.def)             Requested size: 114.15417pt x 59.91043pt.
  [15
 
  <D:/Graphcut/doc/presentation/Figure/fuzzy_map.png (PNG copy)> <D:/Graphcut/do
-c/presentation/Figure/fore-back.png (PNG copy)>] [16
-
-] <./Figure/ROI.png, id=543, 422.32782pt x 316.18124pt>
+c/presentation/Figure/fore-back.png>]
+<./Figure/ROI.png, id=513, 341.77687pt x 158.84344pt>
 File: ./Figure/ROI.png Graphic file (type png)
+ <use ./Figure/ROI.png>
+Package pdftex.def Info: ./Figure/ROI.png used on input line 401.
+(pdftex.def)             Requested size: 199.77199pt x 92.84668pt.
 
-<use ./Figure/ROI.png>
-Package pdftex.def Info: ./Figure/ROI.png used on input line 412.
-(pdftex.def)             Requested size: 228.31271pt x 170.93312pt.
+[16
 
-Overfull \vbox (20.92534pt too high) detected at line 412
+ <D:/Graphcut/doc/presentation/Figure/ROI.png>]
+Overfull \hbox (6.34538pt too wide) in paragraph at lines 421--421
+[][]  
  []
 
 [17
 
- <D:/Graphcut/doc/presentation/Figure/ROI.png (PNG copy)>]
-Overfull \hbox (6.34538pt too wide) in paragraph at lines 432--432
-[][]  
- []
-
-[18
-
 ]
 No file graph_cut_building.bbl.
-Package atenddvi Info: Last page = 19.
-[19
+Package atenddvi Info: Last page = 18.
+[18
 
 ]
 \tf@nav=\write7
 \tf@toc=\write8
 \tf@snm=\write9
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 440.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 440.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 429.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 429.
  (D:\Graphcut\doc\presentation\graph_cut_building.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 440.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 440.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 429.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 429.
 Package rerunfilecheck Info: File `graph_cut_building.out' has not changed.
-(rerunfilecheck)             Checksum: 0F12A20F49E0EFF162CAAABC887AC425;585.
+(rerunfilecheck)             Checksum: 5C44541DEBBCD728EAE5756D0F50625A;534.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1687,13 +1687,13 @@ LaTeX Font Warning: Size substitutions with differences
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 440.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 429.
  ) 
 Here is how much of TeX's memory you used:
- 22617 strings out of 493921
- 404526 string characters out of 3144873
+ 22608 strings out of 493921
+ 404443 string characters out of 3144873
  563443 words of memory out of 3000000
- 25291 multiletter control sequences out of 15000+200000
+ 25285 multiletter control sequences out of 15000+200000
  21660 words of font info for 81 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  56i,20n,57p,3276b,710s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1711,9 +1711,9 @@ s (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi12.pfb><C:/Program Files
  (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi8.pfb><C:/Program Files (
 x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x8
 6)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on graph_cut_building.pdf (19 pages, 3267614 bytes).
+Output written on graph_cut_building.pdf (18 pages, 3277486 bytes).
 PDF statistics:
- 684 PDF objects out of 1000 (max. 8388607)
- 51 named destinations out of 1000 (max. 500000)
- 255 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 653 PDF objects out of 1000 (max. 8388607)
+ 48 named destinations out of 1000 (max. 500000)
+ 247 words of extra memory for PDF output out of 10000 (max. 10000000)
 
