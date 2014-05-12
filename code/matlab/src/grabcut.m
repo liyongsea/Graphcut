@@ -29,8 +29,8 @@ function [res,evol]=grabcut(I,forgroundMask,backgroundMask,para)
     for_mixture=GaussianMixture(forground,for_comp);
     back_mixture=GaussianMixture(background,back_comp);
     
-    
-    for i=1:para.max_iteration
+    i=1;
+    while (i<para.max_iteration&&(length(forground)>0)&&(length(background)>0))
         % learning
         [Nan, forP]=evaluate_mixture(forground',for_mixture);
         [Nan, backP]=evaluate_mixture(background',back_mixture);
@@ -44,6 +44,7 @@ function [res,evol]=grabcut(I,forgroundMask,backgroundMask,para)
         % assignment
         forground=extractFromMask(I,mask);
         background=extractFromMask(I,~mask);
+        i=i+1;
     end
     res=mask;
 end
