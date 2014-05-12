@@ -5,17 +5,17 @@ clear all
 rng('default');
 %%
 dataPath='/home/li/MVA/Graphcut_shadow/data';
-I=imread('/home/li/MVA/Graphcut_shadow/data/lille.jpg');
-% I=imread('/home/li/MVA/Graphcut_shadow/data/toulouse1_qb.gif');
+% I=imread('/home/li/MVA/Graphcut_shadow/data/lille.jpg');
+I=imread('/home/li/MVA/Graphcut_shadow/data/toulouse1_qb.gif');
 %I=imread('/home/li/MVA/Graphcut_shadow/data/zebra.jpg');
 figure,imshow(I);
 %% select sub window
 % window_size=[200,200];
-window_size=[200,200];%toulouse
+window_size=[100,100];%toulouse
 % window_size=[60,60];%lille
-% window_center=[1350,1350]; %toulouse
+window_center=[1350,1350]; %toulouse
 % window_center=[430, 430]; %lille
-window_center=[600, 700]; %lille
+% window_center=[600, 700]; %lille
 % window_center=[750,800];
 I_sub=I(window_center(1)-window_size(1):window_center(1)+window_size(1),window_center(2)-window_size(2):window_center(2)+window_size(2),:);
 %I_sub=(I);
