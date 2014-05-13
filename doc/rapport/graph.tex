@@ -154,7 +154,7 @@
 \pagestyle{headings}
 \mainmatter
 \def\ECCV14SubNumber{979}  % Insert your submission number here
-\title{Building Segmentation Using Graph Cut}
+\title{Automatic Building Detection Using Graph Cut}
 
 \titlerunning{Méthodes avancées de traitement des images}
 
@@ -167,7 +167,9 @@
 \maketitle
 
 \section{Introduction}
-
+The detection of buildings from remote sensed images (aerial \& satellite) is a very challenging problem which has many application, including urban monitoring, change detection, estimation of human population, etc. However, the huge amount of data make it impossible to process by manual method or semi automatic method (user intervention), that is why it is important to develop a automatic detection algorithm. The major difficulties are to take into account the different shapes of buildings during the detection and separate them from a complex background without any human intervention. \\
+The goal of this project is to study an origin approach proposed by Ok et al. \cite{OK:2013}, to implement the algorithm and test its performance. This method use the fact that buildings always cast shadows, to define a foreground-background selection. Such a selection allows to apply the grab cut segmentation (Rother et al., 2004 \cite{Rother:2004}).\\
+In the section 1, we develop the grab cut algorithm and describe how to apply it to building detection; then we detail the automatic detection process, in which a shadow mask and a vegetation mask are processed to reveal the location of buildings. In section 3, we evaluate the performance of the method by defining the Precision, Recall and F1-score; most importantly, we explain the roles of all the involved parameters and test their impact on the model's performance. We discuss our result and point out the limitation and future work in section 4.
 \section{Approach}
 \subsection{Semi-automatic Segmentation : GrabCut}
 \subsection{Automatic Foreground-Background Windows Selection}
