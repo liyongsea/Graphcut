@@ -18,7 +18,8 @@ set(gca,'position',[0 0 1 1],'units','normalized')
 %% read vegetation mask
 veg_mask= load([dataPath 'veg_mask.mat'],'-ASCII');
 hold on, drawMaskContour(veg_mask);title('vegetation mask');
-
+set(gca,'position',[0 0 1 1],'units','normalized')
+saveas(hf,[dataPath 'veg'],'png');
 %% compute the shadow mask on image
 I_gray=rgb2gray(I);
 para.method='croissance';
@@ -67,7 +68,7 @@ figure,imshow(shadow_clean)
 % figure,imshow(double(L_s==num_s(part)))
 %%
 building=zeros(size(I,1),size(I,2));
-for part=1:40
+for part=3
 % part=8;
 part
 % building segmentation for each component
@@ -80,8 +81,8 @@ para_fuzzy.l=10;
 ROI=fuzzy_flat(shadow_i, para_fuzzy);
 window_i=getSubwindow(ROI);
 ROI=(ROI&(~veg_mask));
-% figure,subplot(121),imshow(I),hold on,drawMaskContour(ROI),hold on, drawWindows(window_i,[1 0 0]),subplot(122),imshow(ROI)
-
+figure,subplot(121),imshow(I),hold on,drawMaskContour(ROI),hold on, drawWindows(window_i,[1 0 0]),subplot(122),imshow(ROI)
+%%
 %
 xmin=window_i(1);
 ymin=window_i(3);
@@ -109,16 +110,16 @@ backgroundMask=(~ROI_sub)|(veg_sub);
 %
 if ( sum(forgroundMask(:))>30)
     para.max_iteration=8;
-    para.beta=1;%gradiant tracking parameter
-    para.gamma=3;%ising regularity
+    para.beta=3;%gradiant tracking parameter
+    para.gamma=6;%ising regularity
     para.fc=5;
     [Ireg,evol]=grabcut(I_sub,forgroundMask,backgroundMask,para);
     % plot
-%     figure(),subplot(121),imshow(I_sub);subplot(122),imshow(Ireg);
+    figure(),subplot(121),imshow(I_sub);subplot(122),imshow(Ireg);
     
-%     h=figure(),%drawMask(I_rgb,Ireg,[1,0,0]);
-%     imshow(I_sub)
-%     hold on,drawMaskContour(Ireg)
+    h=figure(),%drawMask(I_rgb,Ireg,[1,0,0]);
+    imshow(I_sub)
+    hold on,drawMaskContour(Ireg,[0 0 1])
     % saveas(h,'example','pdf')
     %
     idx_reg=find(Ireg>0);
@@ -128,12 +129,20 @@ if ( sum(forgroundMask(:))>30)
     idx_glob=sub2ind(size(building),yglob,xglob);
     %
     building(idx_glob)=1;
-%     figure, subplot(2,3,1),imshow(I_sub);
-%     for i=1:5
+    figure, subplot(2,3,1),imshow(I_sub);
+    for i=1:3
 %        subplot(2,3,i+1), imshow(evol(:,:,i))
-%     end
+        figure,imshow(I_sub)
+        hold on,drawMaskContour(evol(:,:,i),[0 0 1])
+    end
 end
 end
+%%
+    for i=1:5
+       subplot(2,3,i+1), imshow(evol(:,:,i))
+%         figure,imshow(I_sub)
+%         hold on,drawMaskContour(Ireg,[0 0 1])
+    end
 %%
 figure,drawMask(I,double(building),[0 0 1]);
 % figure, imshow(I), hold on, drawMaskContour(building)

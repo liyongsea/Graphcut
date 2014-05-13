@@ -170,7 +170,7 @@
      \item approach
      \item synthetic test
     \end{enumerate}
-  \item Automation
+  \item Automatic Segmentation
     \begin{enumerate}
      \item shadow detection
      \item vegetation detection
@@ -213,7 +213,7 @@
      \item Approach
      \item Experience
     \end{enumerate}
-  \item Automation
+  \item Automatic Segmentation
     \begin{enumerate}
      \item shadow detection
      \item vegetation detection
@@ -323,8 +323,7 @@
  \end{frame}
  
  
-
-\section{Automation}
+\section{Automatic Segmentation}
  \begin{frame}
   \scriptsize
   {
@@ -334,7 +333,7 @@
      \item Approach
      \item Experience
     \end{enumerate}
-  \item \textbf{Automation}
+  \item \textbf{Automatic Segmentation}
     \begin{enumerate}
      \item shadow detection
      \item vegetation detection
@@ -352,10 +351,10 @@
   \frametitle{shadow detection}
    Two steps: K-means and growth of region 
   \begin{itemize}
-   \item Use K-means to find the first peak and therefore find a simple threshold for shadows.
+   \item Use K-means to find the first peak and therefore find a simple threshold for shadows. Normally 5 or 6 cluster would be enough for the detection. 
   
-   \item Use the result of threshold as seed to apply method of growth of region to obtain the complete shadows.
-    \insertF{shadow}{Shadow detection}{0.5}
+   \item Use the result of threshold as seed to apply method of growth of region to obtain the complete shadows. We need to control the tolerance in this algorithm.
+    \insertF{shadow}{Shadow detection}{0.4}
   \end{itemize}
  \end{frame} 
  
@@ -365,7 +364,7 @@
   \begin{itemize}
    \item Likelihood between the color and the color of vegetation.
    \end{itemize}
-   \insertF{vegetation}{Vegetation detection}{0.8}
+   %\insertF{vegetation}{Vegetation detection}{0.8}
  \end{frame} 
  
   \section{Clean shadows}
@@ -373,8 +372,8 @@
   \frametitle{Clean shadows}
   \begin{itemize}
    \item First remove the detected vegetation from the shadow.
-   \item Remove the shadow corresponding to the detected vegetation by double threshold of fuzzy map on each connected component.
-   \insertF{cleaned_shadow}{Cleaned shadow}{0.5}
+   \item Remove the shadow corresponding to the detected vegetation by double threshold of fuzzy map on each connected component. 
+   \insertTwoF{shadow}{cleaned_shadow}{Shadow before and after being cleaned}{0.4}
   \end{itemize}
  \end{frame} 
  
@@ -383,32 +382,23 @@
   \frametitle{Foreground detection}
     
   \begin{itemize}
-   \item Construct shadow structural element with reversed sun direction and length of shadow.
-   
-   \item Create the fuzzy map and then apply the double threshold to obtain the foreground mask.
+   \item Construct shadow structuring element with reversed sun direction and length of shadow. $\nu_{L,\lambda}$, $L$ length and $\lambda$ direction. 
+   \item Construct non-flat structuring element $\nu_{L,\lambda,\sigma,\kappa}=\nu_{L,\lambda}*\nu_{\sigma,\kappa}$, with $\kappa$ kernel size and $\sigma$ rate of decrease.
+   \item Create the fuzzy map $\beta_{\lambda}(B)=(B^{per}\oplus \nu_{L,\lambda,\sigma,\kappa})\cap B^C$and then apply the double threshold $\theta_1, \theta_2$ to obtain the foreground mask.
    \insertTwoF{fuzzy_map}{fore-back}{Fuzzy map and Foreground detection}{0.4}
   \end{itemize}
  \end{frame} 
  
  
- \section{ROI detection}
-\begin{frame}
-  \frametitle{ROI detection}
-    
-  \begin{itemize}
-   \item Construct shadow structural element with reversed sun direction and length to be configured.
-   \insertF{re_direction}{Structural element}{0.5}
-   \end{itemize}
- \end{frame} 
- 
    \section{ROI detection}
 \begin{frame}
 \begin{itemize}
   \frametitle{ROI detection}
-   \item Dilate the shadow with the shadow structural element in order to obtain the regions of interest(in which there are buildings we want to detect).
+   \item Dilate the shadow with the shadow structural element in order to obtain the regions of interest(in which there are buildings we want to detect). We need to control the length $L$ of the element in order not to exclude part of building.
    \insertF{ROI}{Region of interest}{0.8}
   \end{itemize}
  \end{frame} 
+ 
  
  \section{Experience}
   \begin{frame}
