@@ -14,6 +14,7 @@
 % \usepackage{setspace}
 \usepackage{algorithm}
 \usepackage{epsfig}
+\graphicspath{{./Figure/}} 
 % \usepackage[noend]{algorithmic}
 % \newtheorem{thm}{Theorem}
 \graphicspath{{./Figure/}} 
@@ -147,6 +148,9 @@
 \newcommand{\dt}{\mathrm{d}\mathbf{t}}
 \newcommand{\gau}[3]{\exp(-\frac{1}{2#3}(#1-#2 )^2}
 \newcommand{\wdist}[3]{\frac{1}{2#3}(#1-#2 )^2}
+\newcommand{\bfE}{\mathbf{E}}
+\newcommand{\bfz}{\mathbf{z}}
+
 \begin{document}
 % \renewcommand\thelinenumber{\color[rgb]{0.2,0.5,0.8}\normalfont\sffamily\scriptsize\arabic{linenumber}\color[rgb]{0,0,0}}
 % \renewcommand\makeLineNumber {\hss\thelinenumber\ \hspace{6mm} \rlap{\hskip\textwidth\ \hspace{6.5mm}\thelinenumber}}
@@ -168,19 +172,59 @@
 
 \section{Introduction}
 The detection of buildings from remote sensed images (aerial \& satellite) is a very challenging problem which has many application, including urban monitoring, change detection, estimation of human population, etc. However, the huge amount of data make it impossible to process by manual method or semi automatic method (user intervention), that is why it is important to develop a automatic detection algorithm. The major difficulties are to take into account the different shapes of buildings during the detection and separate them from a complex background without any human intervention. \\
-The goal of this project is to study an origin approach proposed by Ok et al. \cite{OK:2013}, to implement the algorithm and test its performance. This method use the fact that buildings always cast shadows, to define a foreground-background selection. Such a selection allows to apply the grab cut segmentation (Rother et al., 2004 \cite{Rother:2004}).\\
+The goal of this framework is to study an origin approach proposed by Ok et al. \cite{OK:2013}, to implement the algorithm and test its performance. This method use the fact that buildings always cast shadows, to define a foreground-background selection. Such a selection allows to apply the grab cut segmentation (Rother et al., 2004 \cite{Rother:2004}).\\
 In the section 1, we develop the grab cut algorithm and describe how to apply it to building detection; then we detail the automatic detection process, in which a shadow mask and a vegetation mask are processed to reveal the location of buildings. In section 3, we evaluate the performance of the method by defining the Precision, Recall and F1-score; most importantly, we explain the roles of all the involved parameters and test their impact on the model's performance. We discuss our result and point out the limitation and future work in section 4.
 \section{Approach}
+In this section, we show the proposed approach for automatic building detection. The method is based on the GrabCut segmentation algorithm, which is a semi automatic segmentation method producing a binary foreground background separation. The algorithm itself requires the user to provide a window indicating the foreground region for initialization. The idea is to provide such a window using the prior knowledge of the locations of buildings. More precisely, we use the fact that buildings cast shadows on the ground, and shadows are much easier to detect on images. We define a region of interest (ROI) for each shadow component and analysis the probability of the shadow belonging to a building, especially by eliminating the possibility of the object being a vegetation. In the case of a building, we extract the foreground information by searching along the solar elevation direction. And finally, we apply the GrabCut algorithm on a local window containing the ROI.\\
+In the following part, we develop the GrabCut method, stressing on the theory. The we focus on the whole detection algorithm, and give the essential elements.
 \subsection{Semi-automatic Segmentation : GrabCut}
+The GrabCut method is a iterative segmentation, introduced by Rother et al. \cite{Rother:2004}, alternating between learning and an one-shot graph cut segmentation. In this part, we  first formalize the segmentation problem as a energy minimization problem. Given an image whose pixels are denoted by $\bfz=(z_1,z_2,...,z_N)$, where $N$ is the size of the image and $z_n$ could be one dimensional (gray level image) or multi dimensional (color image), a binary segmentation consist in finding a vector $\alpha=(\alpha_1,\alpha_2,...,\alpha_N)$, $\alpha_n\in\{0,1\}$, assigning all the pixels to the foreground or background according to a certain criterion. Typically, we want the labels $\alpha$ minimize an energy below:
+\begin{equation}
+\bfE(\alpha,\theta,\bfz)=U(\alpha,\theta,\bfz)+V(\alpha,\bfz)
+\end{equation}
+where,
+  \begin{itemize}
+  \item $\theta$ represents the stochastic model for each label/class, it could be either defined by the user or learned on the image (the empirical histogram, GMM...).
+  \item $U=\sum_n -\log(p_\theta (\alpha_n,z_n))$ the likelihood term, it represents the data attachment term. 
+  \item $V=\gamma \sum_{n,m\in \mathbf{C}}[\alpha_m \neq \alpha_n] \exp(-\beta|z_n-z_m|^2)$ the regularity term, it promote encourage the similar of neighbour pixels. $\beta$ and $\gamma$ are parameters of the algorithm. 
+  \end{itemize}
+Such an energy correspond to a Markov random field model for images, and for $\beta=0$ we have the classic Isings regularity term. It has been proved that such model is well adapted to image segmentation problem, and the global minimum of such an energy can be computed efficiently via a Graphcut algorithm (Kolmogorov, 2004 \cite{Kolmogorov:2004}).\\
+The GrabCut replace this one shot GraphCut segmentation by an iterative procedure that alternate between estimation and parameters learnings. The foreground and the background are 
 \subsection{Automatic Foreground-Background Windows Selection}
-\subsubsection{Shadow Mask}
-
-test!
+\insertF{schema}{Overview of the algorithm}{1}{sch}
+\subsubsection{Shadow Mask} 
+To extract the building from the map by using the shadows, we need to extract the shadows first. \\
+An easy and naive way to detect shadows is to apply a simple threshold on the gray scale image because intuitively, the shadows are the darkest regions in a map. However, this method would require human interference because the threshold would depend on the map we have and it could have much variation from one map to another. Thus, it is impossible to find a universal threshold for all maps and therefore this method is non-automatic.\\
+Thus, an idea to automatize the threshold is to extract the threshold value from the image instead of giving the value by human. As we discussed above, the shadow correspond to the most dark regions in the gray scale image, therefore, by choosing the first peak in the histogram, we can extract the darkest regions in the map. \\
+A method to realize this idea is the K-means. We need to give the number of clusters $n$ we want to get, and the algorithm would give the partition of the $n$ cluster finally. Then we use the limit value $\theta$ between the first and second cluster as the threshold we want. In this step, the number of clusters $n$ could change the result of partition and therefore the threshold $\theta$. In our experiences, 5 or 6 clusters would work well to find the good threshold.\\
+However, this result is not good enough as we know that if the first two clusters are partly overlapped, then a part of shadow would be considered in the second cluster and thus will not be detected.\\ 
+Since we have only used the gray scale information in this method, we could improve it by adding the geometric information. We will use the shadow detected in the first step as seed to be propagated by region-growing method. For each neighbour of each seed, we compare the difference between their gray scale values, and if the difference is less than our tolerance $\tau$, they are considered as shadow and we add them to the seed set. We repeat the process until there is no change in the seed set and we say the shadow is the seed set. In our tests, we choose $\tau =0.2$.\\
+Finally, we need to clean the shadow with the solar information. As the photo is taken at a specific time we can find the solar elevation angle $\phi$, the height $T_{height}$ and the directional information $\lambda$. The idea is to apply a morphological opening to each shadow component using a specific directional flat structuring element $\sigma_{L,lambda}$ generated from the known solar information: the directional information $\lambda$ with an edge length $L$. The edge length could be calculated by using $\phi$, $T_{height}$ and image resolution $c$. \\
+$L=\lceil \frac{T_{height}}{tan \phi.c}\rceil$.
+To construct the structuring element, we can use the Bresenham line discretion algorithm [Bresenham, 1965].\\
+We then apply a morphological opening to each shadow component using the structuring to eliminating the misclassification part of shadow that we introduced in the region-growing algorithm.\\
+%\insertTwoF{hist}{shadow}{shadow mask}{0.4}
 
 
 \subsubsection{Vegetation Mask}
 \subsubsection{Fuzzy Landscape}
+We can model the spatial relation between buildings and their
+shadows with a morphological fuzzy approach. Given a
+shadow object $B$ and a non-flat line-based structuring element
+$\nu_{L,\lambda,\sigma,\kappa}$, the landscape $\beta_{\lambda}(B)$ around the shadow object along the
+given direction $\lambda$ can be defined as a fuzzy set of membership values in image space: \\
+ $\beta_{\lambda}(B)=(B^{per}\oplus \nu_{L,\lambda,\sigma,\kappa})\cap B^C$. \\
+Here, $B^{per}$ represents the perimeter pixels of the shadow object $B$ computed in 8-neighbourhood connectivity, $B^C$ is the complement of the shadow object $B$, and the operators $\oplus$ and $\cap$ denote the morphological dilation and a fuzzy intersection, respectively. The landscape membership values are defined in the range of $[0,1]$, and the membership values of the landscapes generated decrease when moving away from the shadow object and are bounded in a region defined by the object's extents and the direction defined by angle $\lambda$. The line-based non-flat
+structuring element $\nu_{L,\lambda,\sigma,\kappa}$ is generated by combining the two structuring elements with a pixel-wise multiplication operator (*):
+$\nu_{L,\lambda,\sigma,\kappa}=\nu_{L,\lambda}*\nu_{\sigma,\kappa}$ \\
+Here, $\nu_{\sigma,\kappa}$ is a Gaussian non-flat structuring element with kernel size $\kappa$, and the rate of decrease of the membership values within the element is controlled by a single parameter $\sigma$. However, the flat
+structuring element $\nu_{L,\lambda}$ is for providing directional information, where $L$ denotes the line segment and $\lambda$ is the angle where the line is directed.\\
+%\insertF{fuzzy_map}{Fuzzy landscape}{0.6}
+Finally, we apply a double threshold $\theta_1, \theta_2$ on the fuzzy landscape so that we can obtain a region which is inside the building. This result can be used as markers of the foreground for the following step of grab-cut. This method can also be used to eliminate the shadows of the vegetations by comparing the result of double threshold with the vegetation mask.\\
+ 
 \subsubsection{Region of Interest}
+Finally, in order to apply automatically the grab-cut algorithm, we need to define the background in the image. We can use an idea similar to the idea that we construct the fuzzy landscape.\\
+We know that the shadow is always at side of the building with the certain solar direction $\alpha$. Thus, we can find the building in the reverse direction of the shadow, which inspire us to dilate the shadow in the reverse solar direction within certain distance $l$. Normally, our building is included in the region of dilated shadow, called ROI(region of interest). Here, the choice of $l$ is critic. If $l$ is too small, then we cannot include completely the building in our region of interest and therefore influence the accuracy of the grab-cut. 
 \subsubsection{First Level Partition}
 
 
