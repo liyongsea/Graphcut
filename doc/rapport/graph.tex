@@ -189,7 +189,33 @@ where,
   \item $V=\gamma \sum_{n,m\in \mathbf{C}}[\alpha_m \neq \alpha_n] \exp(-\beta|z_n-z_m|^2)$ the regularity term, it promote encourage the similar of neighbour pixels. $\beta$ and $\gamma$ are parameters of the algorithm. 
   \end{itemize}
 Such an energy correspond to a Markov random field model for images, and for $\beta=0$ we have the classic Isings regularity term. It has been proved that such model is well adapted to image segmentation problem, and the global minimum of such an energy can be computed efficiently via a Graphcut algorithm (Kolmogorov, 2004 \cite{Kolmogorov:2004}).\\
-The GrabCut replace this one shot GraphCut segmentation by an iterative procedure that alternate between estimation and parameters learnings. The foreground and the background are 
+The GrabCut replace this one shot GraphCut segmentation by an iterative procedure that alternate between estimation and parameters learnings. The foreground and the background are described by two Gaussian mixture models (GMM), each with K components. Hence, a additional parameter $\mathbf{k}=(k_1,k_2,...,k_N)$ is introduced, where $k_n$ assign each pixel $z_n$ to one of the GMM's components. The energy now becomes:
+\begin{equation}
+ \bfE(\alpha,\mathbf{k},\theta,\bfz)=U(\alpha,\mathbf{k},\theta,\bfz)+V(\alpha,\bfz)
+\end{equation}
+where,
+ \begin{itemize}
+  \item $U(\alpha,\mathbf{k},\theta,\bfz)=\sum_n D_n(\alpha,\mathbf{k},\theta,\bfz)$, with 
+  \[
+  \begin{split}
+  D_n(\alpha,\mathbf{k},\theta,\bfz)&=-\log(p_\theta (\alpha_n,k_n,z_n)) -\log(\pi_\theta(\alpha_n,k_n)) \\
+  &=-\log(\pi_\theta(\alpha_n,k_n))-1/2\log \det \Sigma(\alpha_n,k_n)\\
+  &-1/2 \tra{[z_n-\mu(\alpha_n,k_n)]}\inv{\Sigma(\alpha_n,k_n)}[z_n-\mu(\alpha_n,k_n)]
+  \end{split}
+  \]
+
+ \end{itemize}
+we can see that $U$ correspond to the likelihood term of the GMM, and $\theta$ can be now written as:
+\[
+\theta=\{\pi(\alpha,k),\mu(\alpha,k),\Sigma(\alpha,k),\alpha \in \{0,1\},k\in \{1,...,K\}\}
+\]
+where $\pi$ is the weighting of the Gaussian component, and $\mu$, $\Sigma$ its means and covariance matrix. Given a predefined window $\mathbf{T}_u$, the algorithm can be summarized as following:
+  \begin{enumerate}
+   \item \textit{Initialization}. $\alpha_n=1$ for $n\in \mathbf{T}_u$, $\alpha_n=0$ otherwise.
+   \item \textit{Learning}. $\mathbf{k}=\arg\min\limits_{\mathbf{k}} U(\alpha,\mathbf{k},\theta,\bfz)$, $\theta=\arg\min\limits_{\theta} U(\alpha,\mathbf{k},\theta,\bfz)$
+   \item \textit{Estimation}. $\min\limits_{\alpha}\min\limits_{\mathbf{k}}\bfE(\alpha,\mathbf{k},\theta,\bfz) $
+   \item \textit{Iteration}. Repeat 2,3 until convergence.
+  \end{enumerate}
 \subsection{Automatic Foreground-Background Windows Selection}
 \insertF{schema}{Overview of the algorithm}{1}{sch}
 \subsubsection{Shadow Mask} 
