@@ -460,6 +460,51 @@
  
  
  \section{Experience}
+ 
+ \begin{frame}
+  \frametitle{Parameters involved}
+  \begin{center}
+    \begin{tabular}{  l   l   l }
+    \hline
+    section & parameter & value   \\ \hline  \noalign{\smallskip}  
+    shadow mask & K means centers & 8  \\ 
+    &growing region tolerance ($\tau$) & 0.15\\
+    &minimum length of shadow to be kept ($l$) & 3\\
+    vegetation mask & vegetation elimination ratio & 0.2\\
+    fuzzy landscape & Kernel size ($\kappa$) & 10 pixels\\
+    & Sigma ($\sigma$) & 5\\
+    fist level partition & foreground GMM components ($fc$) & 5\\
+     & background GMM components ($bc$) & 5\\
+     & ROI size& 10\\
+     & Isings smoothness term ($\gamma$) & 5\\
+     & gradient capture term ($\beta$) & 3.5\\ \hline
+    \end{tabular}
+\end{center}
+ \end{frame}
+ 
+ \begin{frame}
+  \frametitle{Performance Evaluation}
+  Recall, precision, $F_1$ score.
+  \begin{itemize}
+   \item TP=true positive, FP=false positive, FN=false negative.
+   \item Recall$=\frac{\arrowvert TP\arrowvert}{\arrowvert TP\arrowvert+\arrowvert FN\arrowvert}$, precision$=\frac{\arrowvert TP\arrowvert}{\arrowvert TP\arrowvert+\arrowvert FP\arrowvert}$
+   \item $F1=\frac{2 recall \times precision}{recall + precision}$
+  \end{itemize}
+    \begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.45\linewidth}
+     \includegraphics<1>[width=\linewidth]{lille_i}
+    \includegraphics<2>[width=\linewidth]{res_lille}
+    \end{minipage}
+    \begin{minipage}{0.45\linewidth}
+    \includegraphics<1>[width=\linewidth]{van}
+    \includegraphics<2>[width=\linewidth]{res_vac}
+    \end{minipage}
+      \caption{Green, blue and red represent TP, FN and FP}
+  \end{figure}  
+ \end{frame}
+
+
   \begin{frame}
    {\Huge
      \vspace {0.15\textwidth}

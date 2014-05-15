@@ -4,14 +4,14 @@ close all
 clear all
 rng('default');
 %%
-dataPath='/home/li/MVA/Graphcut_shadow/data/lille';
-I=imread('/home/li/MVA/Graphcut_shadow/data/lille/image.jpg');
+dataPath='/home/li/MVA/Graphcut_shadow/data/vatican';
+I=imread('/home/li/MVA/Graphcut_shadow/data/vatican/van.jpg');
 % I=imread('/home/li/MVA/Graphcut_shadow/data/toulouse1_qb.gif');
 %I=imread('/home/li/MVA/Graphcut_shadow/data/zebra.jpg');
 figure,imshow(I);
 %% select sub window
 % window_size=[200,200];
-window_size=[200,200];%toulouse
+window_size=[250,250];%toulouse
 % window_size=[60,60];%lille
 % window_center=[1350,1350]; %toulouse
 % window_center=[430, 430]; %lille
@@ -29,10 +29,10 @@ else
     I_sub=rgb2gray(I_rgb);
 end
 figure(),imshow(I_rgb);
-% imwrite(I_rgb,[dataPath,'/Image'],'jpg');
+imwrite(I_rgb,[dataPath,'/Image'],'jpg');
 %%
-windows_for=load([dataPath '/../veg_win.mat'],'-ASCII')
-% windows_for=getSubSample(I_rgb,[1 0 0]);
+% windows_for=load([dataPath '/../veg_win.mat'],'-ASCII')
+windows_for=getSubSample(I_rgb,[1 0 0]);
 % save([dataPath '/veg_win.mat'],'windows_for','-ASCII')
 %%
 
@@ -50,7 +50,7 @@ veg=extractFromMask(I_rgb,vegMask);
 %%
 para.max_iteration=5;
 para.beta=0.1;%gradiant tracking parameter
-para.gamma=1;%ising regularity
+para.gamma=3;%ising regularity
 
 [Ireg,evol]=grabcut(I_rgb,vegMask,[],para);
 %% plot
@@ -58,6 +58,6 @@ figure(),subplot(121),imshow(I_rgb);subplot(122),imshow(Ireg);
 
 h=figure(),%drawMask(I_rgb,Ireg,[1,0,0]);
 imshow(I_rgb)
-hold on,drawMaskContour(Ireg)
+hold on,drawMask(I_rgb,Ireg,[0 1 0])
 %%
 save([dataPath '/veg_mask.mat'],'Ireg','-ASCII')
